@@ -13,15 +13,40 @@ class Food:
         print(f"Fats: {self.fats} g")
         print(f"Carbohydrates: {self.carbohydrates} g")
 
+def calculate_percentage(calories, nutrient):
+    return (nutrient / calories) * 100
+
+def display_summary(foods):
+    if not foods:
+        print("No foods added yet. Add a food first.")
+    else:
+        total_calories = sum(food.calories for food in foods)
+        total_proteins = sum(food.proteins for food in foods)
+        total_fats = sum(food.fats for food in foods)
+        total_carbohydrates = sum(food.carbohydrates for food in foods)
+
+        print("\nNutritional summary for all foods:")
+        print(f"Total Calories: {total_calories} kcal")
+        print(f"Total Proteins: {total_proteins} g")
+        print(f"Total Fats: {total_fats} g")
+        print(f"Total Carbohydrates: {total_carbohydrates} g")
+
+        if total_calories > 0:
+            print("\nPercentage of macronutrients in total calories:")
+            print(f"Proteins: {calculate_percentage(total_calories, total_proteins):.2f}%")
+            print(f"Fats: {calculate_percentage(total_calories, total_fats):.2f}%")
+            print(f"Carbohydrates: {calculate_percentage(total_calories, total_carbohydrates):.2f}%")
+
 def main():
     foods = []
 
     while True:
         print("\n1. Add a new food")
-        print("2. View nutritional information")
-        print("3. Exit")
+        print("2. View nutritional information for a specific food")
+        print("3. View nutritional summary for all foods")
+        print("4. Exit")
 
-        choice = input("Enter your choice (1, 2, or 3): ")
+        choice = input("Enter your choice (1, 2, 3, or 4): ")
 
         if choice == "1":
             name = input("Enter the name of the food: ")
@@ -50,11 +75,14 @@ def main():
                     print("Invalid choice. Please enter a valid number.")
 
         elif choice == "3":
+            display_summary(foods)
+
+        elif choice == "4":
             print("Exiting the program. Goodbye!")
             break
 
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
 if __name__ == "__main__":
     main()
